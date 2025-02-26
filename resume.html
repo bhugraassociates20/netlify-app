@@ -200,27 +200,84 @@
                 // Hide the download button
                 downloadBtn.style.display = 'none';
                 
-                // Basic PDF options
+                // Updated PDF options for better formatting
                 const opt = {
-                    margin: 10,
+                    margin: [15, 15, 15, 15], // Top, right, bottom, left margins
                     filename: 'vanshika-resume.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true,
+                        scrollY: 0,
+                        windowWidth: element.offsetWidth,
+                        windowHeight: element.offsetHeight
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait',
+                        compress: true
+                    },
+                    pagebreak: { mode: 'avoid-all' }
                 };
+
+                // Add temporary PDF-specific styles
+                const style = document.createElement('style');
+                style.textContent = `
+                    @media print {
+                        .resume-container {
+                            padding: 20px !important;
+                            max-width: 100% !important;
+                        }
+                        .resume-grid {
+                            display: block !important;
+                        }
+                        .resume-section {
+                            page-break-inside: avoid;
+                            margin-bottom: 20px;
+                            width: 100% !important;
+                        }
+                        .projects-grid {
+                            display: block !important;
+                        }
+                        .project-item {
+                            page-break-inside: avoid;
+                            margin-bottom: 15px;
+                        }
+                        .skills-container {
+                            page-break-inside: avoid;
+                        }
+                        .skill-tags {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 8px;
+                        }
+                        body {
+                            font-size: 12pt;
+                            line-height: 1.3;
+                        }
+                        h1 { font-size: 24pt !important; }
+                        h2 { font-size: 18pt !important; }
+                        h3 { font-size: 14pt !important; }
+                        p, li { font-size: 12pt !important; }
+                    }
+                `;
+                document.head.appendChild(style);
 
                 // Generate PDF
                 html2pdf()
                     .set(opt)
                     .from(element)
-                    .toPdf()
-                    .get('pdf')
-                    .then((pdf) => {
-                        pdf.save();
+                    .save()
+                    .then(() => {
+                        // Cleanup
+                        document.head.removeChild(style);
                         downloadBtn.style.display = 'inline-flex';
                     })
                     .catch((error) => {
                         console.error('PDF generation failed:', error);
+                        document.head.removeChild(style);
                         downloadBtn.style.display = 'inline-flex';
                     });
             });
