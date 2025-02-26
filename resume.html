@@ -213,11 +213,23 @@
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // Generate the PDF
-                html2pdf().from(element).set(opt).save().then(function() {
-                    // Show the download button again after PDF is generated
-                    downloadBtn.style.display = 'inline-flex';
-                });
+                // Generate the PDF with proper error handling
+                html2pdf().from(element).set(opt).save()
+                    .then(() => {
+                        // Show the download button again after PDF is generated
+                        downloadBtn.style.display = 'inline-flex';
+                    })
+                    .catch((error) => {
+                        console.error('PDF generation failed:', error);
+                        // Ensure button is restored even if PDF generation fails
+                        downloadBtn.style.display = 'inline-flex';
+                    })
+                    .finally(() => {
+                        // Additional safety measure to ensure button is always restored
+                        setTimeout(() => {
+                            downloadBtn.style.display = 'inline-flex';
+                        }, 2000);
+                    });
             });
         });
     </script>
