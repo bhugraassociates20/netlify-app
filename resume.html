@@ -21,14 +21,14 @@
         </div>
     </nav>
 
-    <div class="resume-container">
+    <div class="resume-container" id="resume-content">
         <div class="resume-header">
             <div class="resume-title">
                 <h1>Vanshika</h1>
                 <p class="subtitle">UI/UX Designer & Web/App Designer</p>
             </div>
             <div class="resume-actions">
-                <button onclick="generatePDF()" class="download-btn">
+                <button id="download-pdf" class="download-btn">
                     <i class="fas fa-download"></i> Download PDF
                 </button>
             </div>
@@ -187,27 +187,39 @@
     </div>
 
     <footer>
-        <p>© 2025 Vanshika. All rights reserved.</p>
+        <p>© 2024 Vanshika. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
     <script>
-        function generatePDF() {
-            // Get the resume container
-            const element = document.querySelector('.resume-container');
+        // Wait for the document to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the download button
+            const downloadBtn = document.getElementById('download-pdf');
             
-            // Configure the PDF options
-            const opt = {
-                margin: [10, 10],
-                filename: 'vanshika-resume.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            // Add click event listener
+            downloadBtn.addEventListener('click', function() {
+                // Get the resume container element
+                const element = document.getElementById('resume-content');
+                
+                // Hide the download button temporarily for the PDF
+                downloadBtn.style.display = 'none';
+                
+                // Configure the PDF options
+                const opt = {
+                    margin: [10, 10],
+                    filename: 'vanshika-resume.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
 
-            // Generate the PDF
-            html2pdf().set(opt).from(element).save();
-        }
+                // Generate the PDF
+                html2pdf().from(element).set(opt).save().then(function() {
+                    // Show the download button again after PDF is generated
+                    downloadBtn.style.display = 'inline-flex';
+                });
+            });
+        });
     </script>
 </body>
 </html>
