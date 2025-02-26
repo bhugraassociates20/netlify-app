@@ -206,28 +206,65 @@
                 
                 // Configure the PDF options
                 const opt = {
-                    margin: [10, 10],
+                    margin: [15, 15], // Slightly larger margins for better readability
                     filename: 'vanshika-resume.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    html2canvas: { 
+                        scale: 2,
+                        useCORS: true,
+                        scrollY: -window.scrollY, // Fix for scrolled page
+                        windowHeight: document.documentElement.scrollHeight
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait'
+                    },
+                    pagebreak: { 
+                        mode: ['avoid-all', 'css', 'legacy'],
+                        before: '.page-break-before',
+                        after: '.page-break-after',
+                        avoid: ['tr', 'td', '.avoid-break']
+                    }
                 };
 
-                // Generate the PDF with proper error handling
+                // Add temporary print classes for page breaks
+                const sections = document.querySelectorAll('.resume-section');
+                sections.forEach((section, index) => {
+                    // Add page break before Work Experience and Education sections
+                    if (section.querySelector('h2 i.fa-briefcase') || 
+                        section.querySelector('h2 i.fa-graduation-cap')) {
+                        section.classList.add('page-break-before');
+                    }
+                    
+                    // Ensure sections don't break internally
+                    section.classList.add('avoid-break');
+                });
+
+                // Generate the PDF
                 html2pdf().from(element).set(opt).save()
                     .then(() => {
-                        // Show the download button again after PDF is generated
                         downloadBtn.style.display = 'inline-flex';
+                        // Remove temporary print classes
+                        sections.forEach(section => {
+                            section.classList.remove('page-break-before', 'avoid-break');
+                        });
                     })
                     .catch((error) => {
                         console.error('PDF generation failed:', error);
-                        // Ensure button is restored even if PDF generation fails
                         downloadBtn.style.display = 'inline-flex';
+                        // Remove temporary print classes
+                        sections.forEach(section => {
+                            section.classList.remove('page-break-before', 'avoid-break');
+                        });
                     })
                     .finally(() => {
-                        // Additional safety measure to ensure button is always restored
                         setTimeout(() => {
                             downloadBtn.style.display = 'inline-flex';
+                            // Final cleanup of temporary print classes
+                            sections.forEach(section => {
+                                section.classList.remove('page-break-before', 'avoid-break');
+                            });
                         }, 2000);
                     });
             });
