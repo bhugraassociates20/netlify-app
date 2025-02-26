@@ -1,0 +1,851 @@
+:root {
+    --primary-color: #6C63FF;
+    --secondary-color: #2F2E41;
+    --accent-color: #FF6584;
+    --background-color: #FFFFFF;
+    --gradient-1: linear-gradient(45deg, #6C63FF, #FF6584);
+    --gradient-2: linear-gradient(135deg, #FF6584, #6C63FF);
+    --text-color: #2D2D2D;
+    --light-purple: #E8E6FF;
+    --transition: all 0.3s ease;
+}
+
+/* Reset base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background: var(--background-color);
+}
+
+/* Fix section layouts */
+section {
+    padding: 100px 5%;
+    position: relative;
+    z-index: 1;
+    background: var(--background-color);
+}
+
+/* Reset hero section styles */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 5% 100px;
+    position: relative;
+    background: white;
+    overflow: hidden;
+}
+
+/* Remove blur effects and complex backgrounds */
+.hero::before {
+    display: none; /* Remove the gradient overlay */
+}
+
+.blob {
+    display: none; /* Remove the blob effect */
+}
+
+/* Clear and visible hero content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: #2D2D2D; /* Solid color instead of variable */
+    font-weight: 700;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #6C63FF, #FF6584);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #6C63FF; /* Fallback color */
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: #4A4A4A; /* Darker color for better readability */
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Clear and organized contact information */
+.hero-contacts {
+    margin: 2rem 0;
+    display: grid;
+    gap: 1rem;
+    background: #F8F9FA;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #E9ECEF;
+}
+
+.hero-contacts a, 
+.hero-contacts p {
+    color: #4A4A4A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.hero-contacts a:hover {
+    transform: translateX(5px);
+    color: #6C63FF;
+}
+
+.hero-contacts i {
+    color: #6C63FF;
+    font-size: 1.2rem;
+    width: 24px; /* Fixed width for alignment */
+    text-align: center;
+}
+
+/* Clear and visible CTA button */
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: #6C63FF;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    background: #5B52FF;
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+}
+
+/* Project Section Styles - Name Display */
+.work-section {
+    padding: 100px 5%;
+    background: white;
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 3rem;
+    margin-top: 2rem;
+    position: relative;
+    padding: 1rem;
+}
+
+.work-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: visible;
+    height: auto;
+    min-height: 250px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #f8f9ff, #ffffff);
+    transition: all 0.3s ease;
+}
+
+/* Project name display */
+.work-preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    background: white;
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.work-preview h3 {
+    font-size: 2rem;
+    color: #2D2D2D;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.work-preview p {
+    font-size: 1.1rem;
+    color: #6C63FF;
+    margin-bottom: 1rem;
+}
+
+/* Info overlay on hover */
+.work-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: auto;
+    background: #6C63FF;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    border-radius: 12px;
+    transform: translate(-50%, -50%) scale(0.95);
+    pointer-events: none;
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.2);
+}
+
+/* Show overlay on hover */
+.work-item:hover .work-info {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.work-item:hover {
+    z-index: 100;
+}
+
+/* Content styles for hover state */
+.work-content {
+    text-align: center;
+    color: white;
+}
+
+.work-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.work-content p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+}
+
+.work-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Project link button */
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: white;
+    color: #6C63FF;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.project-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Filter buttons */
+.work-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: #F0F0FF;
+    color: #6C63FF;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background: #6C63FF;
+    color: white;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+/* Fix about section */
+.about-section {
+    background: var(--light-purple);
+    position: relative;
+    z-index: 2;
+}
+
+.about-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Fix skills grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.skill-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Fix contact section */
+.contact-section {
+    background: var(--background-color);
+    position: relative;
+    z-index: 2;
+}
+
+.contact-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(108, 99, 255, 0.2);
+    border-radius: 8px;
+    background: white;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #6C63FF;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 1rem 2.5rem;
+    background: var(--gradient-1);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+    width: auto;
+    justify-self: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+    background: linear-gradient(45deg, #5B52FF, #FF4F75);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+/* Section headings */
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+}
+
+.hero-content {
+        padding: 1.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+
+    .hero-contacts {
+        padding: 1rem;
+    }
+
+    .hero-contacts a, 
+    .hero-contacts p {
+        font-size: 1rem;
+    }
+
+    .blob {
+        width: 300px;
+        height: 300px;
+    }
+
+    .work-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        padding: 1rem;
+    }
+    
+    .work-info {
+        position: absolute;
+        width: 100%;
+    }
+}
+
+/* Fix navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.2rem 5%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-1);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Fix footer */
+footer {
+    padding: 2rem 5%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background: var(--background-color);
+}
+
+/* Animation adjustments */
+@keyframes blobAnimation {
+    0%, 100% {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+        transform: translate(50px, 50px) rotate(60deg);
+    }
+    66% {
+        border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+        transform: translate(-50px, -50px) rotate(-60deg);
+    }
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Fade in animation classes */
+.fade-out {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero Section Updates */
+.animated-character {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.about-character {
+    position: absolute;
+    left: 5%;
+    bottom: 0;
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+    animation: bounce 4s ease-in-out infinite;
+}
+
+.skill-item:hover {
+    background: var(--gradient-1);
+    transform: translateY(-5px);
+}
+
+.skill-item:hover i,
+.skill-item:hover span {
+    color: white;
+}
+
+.contact-character {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+    animation: wave 3s ease-in-out infinite;
+}
+
+.submit-btn {
+    background: var(--gradient-1);
+}
+
+/* New Animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-50%) rotate(5deg);
+    }
+}
+
+/* Blob Animation */
+.blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: var(--gradient-2);
+    filter: blur(80px);
+    opacity: 0.07;
+    z-index: 1;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.cursor-glow {
+    width: 20px;
+    height: 20px;
+    background: var(--gradient-1);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    z-index: 9999;
+    opacity: 0.5;
+    filter: blur(5px);
+}
+
+.animated-character {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: fadeIn 0.8s ease 0.6s forwards;
+}
+
+.skill-item, .work-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.skill-item.visible, .work-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Add smooth transitions to all elements */
+* {
+    transition: all 0.3s ease;
+}
+
+/* Enhanced hover effects */
+.work-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(108, 99, 255, 0.15);
+}
+
+.skill-item:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* Loading animation */
+.loaded > * {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Experience section */
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.experience-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(108, 99, 255, 0.1);
+}
+
+.experience-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.experience-item .date {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.experience-item ul {
+    margin-top: 1rem;
+    padding-left: 1.5rem;
+}
+
+/* Achievements section */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.achievement-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(108, 99, 255, 0.1);
+}
+
+.achievement-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.achievement-item ul {
+    padding-left: 1.5rem;
+}
+
+/* Education section */
+.education-item {
+    margin-bottom: 2rem;
+}
+
+.education-item h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.education-item p {
+    color: var(--secondary-color);
+    margin-bottom: 0.25rem;
+}
+
+/* Contact section updates */
+.contact-info {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+/* Add smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optional: Add a scroll progress indicator */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--gradient-1);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 1001;
+}
+
+/* Optional: Add a subtle background pattern */
+.hero {
+    background-color: white;
+    background-image: 
+        linear-gradient(rgba(108, 99, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108, 99, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* If you want to specifically target this heading only (recommended), 
+   add a specific class to the h1 */
+.hero-title {
+    font-size: 3.0 rem;
+}
+
+/* Ensure proper spacing between rows */
+@media (min-width: 769px) {
+    .work-grid {
+        gap: 4rem 3rem;
+    }
+} 
