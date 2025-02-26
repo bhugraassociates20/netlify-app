@@ -1,0 +1,224 @@
+/* Resume Page Styles */
+.resume-container {
+    max-width: 1200px;
+    margin: 120px auto 50px;
+    padding: 0 20px;
+}
+
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(108, 99, 255, 0.1);
+}
+
+.resume-title h1 {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.resume-title .subtitle {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--gradient-1);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+.download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+}
+
+.resume-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.resume-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(108, 99, 255, 0.1);
+}
+
+.resume-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.resume-section h2 i {
+    font-size: 1.2rem;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.experience-header h3 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+.date {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.experience-item {
+    margin-bottom: 2rem;
+}
+
+.experience-item:last-child {
+    margin-bottom: 0;
+}
+
+.experience-item p {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.experience-item ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: #666;
+}
+
+.education-item {
+    margin-bottom: 1.5rem;
+}
+
+.education-item:last-child {
+    margin-bottom: 0;
+}
+
+.education-item h3 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.education-details {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.skills-container {
+    display: grid;
+    gap: 2rem;
+}
+
+.skill-category h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.skill-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(108, 99, 255, 0.1);
+    color: var(--primary-color);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.achievements-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.achievement-item h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.achievement-item ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .resume-container {
+        margin-top: 100px;
+    }
+
+    .resume-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .resume-title h1 {
+        font-size: 2.5rem;
+    }
+
+    .experience-header {
+        flex-direction: column;
+        text-align: left;
+        gap: 0.3rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .resume-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .resume-section:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar, .footer, .download-btn {
+        display: none;
+    }
+
+    .resume-container {
+        margin: 0;
+        padding: 20px;
+    }
+
+    .resume-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+} 
