@@ -206,70 +206,98 @@
     }
 }
 
-/* Print Styles */
+/* PDF and Print Styles */
 @media print {
-    /* Ensure each major section starts on a new page when needed */
-    .page-break-before {
-        page-break-before: always;
-        break-before: page;
+    .resume-container {
+        margin: 0 !important;
+        padding: 20px !important;
+        box-shadow: none !important;
     }
 
-    /* Prevent unwanted breaks within sections */
-    .avoid-break {
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-
-    /* Ensure consistent spacing */
-    .resume-section {
-        margin-bottom: 20px;
-        padding: 15px;
-    }
-
-    /* Ensure proper rendering of background colors and shadows */
-    * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* Hide navigation and footer in PDF */
     .navbar, 
     footer, 
     .download-btn {
         display: none !important;
     }
 
-    /* Adjust margins and spacing for PDF */
-    .resume-container {
-        margin: 0 !important;
-        padding: 15px !important;
+    .resume-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
 
-    /* Ensure text remains readable */
-    body {
-        font-size: 12pt;
-        line-height: 1.3;
+    .resume-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+        background: white !important;
+        border: 1px solid #eee !important;
+        box-shadow: none !important;
     }
 
-    /* Ensure headers are clearly visible */
-    .resume-section h2 {
-        margin-top: 10px;
-        margin-bottom: 15px;
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .project-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .skills-container {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .skill-tags {
+        gap: 8px !important;
+    }
+
+    .skill-tag {
+        background: transparent !important;
+        border: 1px solid #ccc !important;
         color: #000 !important;
     }
 
-    /* Ensure lists are properly formatted */
-    ul {
-        padding-left: 20px;
-        margin-bottom: 10px;
+    /* Ensure proper text colors in PDF */
+    h1, h2, h3, h4, h5, h6 {
+        color: #000 !important;
     }
 
-    /* Ensure skill tags are visible */
-    .skill-tag {
-        border: 1px solid #ccc;
-        background: transparent !important;
-        margin: 2px;
+    p, li, .date {
+        color: #333 !important;
     }
+
+    /* Ensure proper spacing */
+    .resume-header {
+        margin-bottom: 20px !important;
+    }
+
+    .experience-item,
+    .education-item,
+    .project-item {
+        margin-bottom: 15px !important;
+    }
+
+    /* Remove gradients and complex backgrounds */
+    .gradient-text {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: #000 !important;
+        color: #000 !important;
+    }
+
+    /* Ensure proper font sizes */
+    body {
+        font-size: 12pt !important;
+        line-height: 1.3 !important;
+    }
+
+    h1 { font-size: 24pt !important; }
+    h2 { font-size: 18pt !important; }
+    h3 { font-size: 14pt !important; }
+    p, li { font-size: 12pt !important; }
 }
 
 /* Projects Section Styles */
