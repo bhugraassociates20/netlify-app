@@ -254,3 +254,48 @@
         color: #666 !important;
     }
 } 
+/* Projects Section Styles */
+.projects-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.project-item {
+    margin-bottom: 1.5rem;
+}
+
+.project-item:last-child {
+    margin-bottom: 0;
+}
+
+.project-item h3 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.project-item p {
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.project-item ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: #666;
+}
+
+@media (min-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For Print */
+@media print {
+    .project-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
