@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="resume.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -27,9 +28,9 @@
                 <p class="subtitle">UI/UX Designer & Web/App Designer</p>
             </div>
             <div class="resume-actions">
-                <a href="path-to-your-resume.pdf" download class="download-btn">
+                <button onclick="generatePDF()" class="download-btn">
                     <i class="fas fa-download"></i> Download PDF
-                </a>
+                </button>
             </div>
         </div>
 
@@ -145,5 +146,23 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        function generatePDF() {
+            // Get the resume container
+            const element = document.querySelector('.resume-container');
+            
+            // Configure the PDF options
+            const opt = {
+                margin: [10, 10],
+                filename: 'vanshika-resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate the PDF
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
 </body>
 </html> 
