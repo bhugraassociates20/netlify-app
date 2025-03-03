@@ -55,17 +55,34 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// Form submission
+// Form submission and responsive handling
 const contactForm = document.querySelector('.contact-form');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+if (contactForm) {
+    // Form submission
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Add your form submission logic here
+        // For now, we'll just show an alert
+        alert('Thank you for your message! I will get back to you soon.');
+        contactForm.reset();
+    });
+
+    // Improve form responsiveness
+    const inputs = contactForm.querySelectorAll('input, textarea');
     
-    // Add your form submission logic here
-    // For now, we'll just show an alert
-    alert('Thank you for your message! I will get back to you soon.');
-    contactForm.reset();
-});
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            if (window.innerWidth <= 768) {
+                // Scroll the form into view when keyboard appears on mobile
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
+    });
+}
 
 // Intersection Observer for fade-in animations
 const observerOptions = {
@@ -261,4 +278,93 @@ style.textContent = `
         }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// Hamburger menu functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+    const menuToggle = document.createElement('div');
+    menuToggle.className = 'menu-toggle';
+    menuToggle.innerHTML = `
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    `;
+    navbar.appendChild(menuToggle);
+
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navbar.contains(e.target) && navLinks.classList.contains('active')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
+
+    // Close menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+});
+
+// Improve scroll behavior for mobile
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+});
+
+document.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].clientY;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeDistance = touchStartY - touchEndY;
+    const threshold = 50;
+
+    if (Math.abs(swipeDistance) > threshold) {
+        const sections = document.querySelectorAll('section');
+        const viewportHeight = window.innerHeight;
+        const currentScroll = window.pageYOffset;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (swipeDistance > 0 && sectionTop > currentScroll) {
+                // Swipe up - scroll to next section
+                section.scrollIntoView({ behavior: 'smooth' });
+                return;
+            } else if (swipeDistance < 0 && sectionTop < currentScroll) {
+                // Swipe down - scroll to previous section
+                section.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+        });
+    }
+}
+
+// Improve responsive image loading
+function handleResponsiveImages() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    images.forEach(img => {
+        if (window.innerWidth <= 768) {
+            img.src = img.getAttribute('data-src-mobile') || img.getAttribute('data-src');
+        } else {
+            img.src = img.getAttribute('data-src');
+        }
+    });
+}
+
+window.addEventListener('resize', handleResponsiveImages);
+window.addEventListener('load', handleResponsiveImages); 
