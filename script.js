@@ -280,36 +280,25 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Update the hamburger menu functionality
+// Mobile menu functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.querySelector('.navbar');
-    
-    // Only create menu toggle if it doesn't exist
-    if (!document.querySelector('.menu-toggle')) {
-        const menuToggle = document.createElement('div');
-        menuToggle.className = 'menu-toggle';
-        menuToggle.innerHTML = `
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        `;
-        navbar.appendChild(menuToggle);
-    }
-
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    // Ensure menu starts closed
+    if (!menuToggle || !navLinks) return;
+
+    // Ensure menu is closed on page load
     navLinks.classList.remove('active');
-    if (menuToggle) menuToggle.classList.remove('active');
-    
+    menuToggle.classList.remove('active');
+
     menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         menuToggle.classList.toggle('active');
         navLinks.classList.toggle('active');
     });
 
-    // Close menu when clicking a link
+    // Close menu when clicking links
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menuToggle.classList.remove('active');
@@ -319,26 +308,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!navbar.contains(e.target)) {
+        if (navLinks.classList.contains('active') && 
+            !menuToggle.contains(e.target) && 
+            !navLinks.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
+
+    // Close menu on window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
             menuToggle.classList.remove('active');
             navLinks.classList.remove('active');
         }
     });
 });
-
-// Fix mobile scroll handling
-function preventScrollOnMenuOpen() {
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (navLinks.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-}
-
-// Add this to your existing menu toggle click handler
-document.querySelector('.menu-toggle')?.addEventListener('click', preventScrollOnMenuOpen);
 
 // Improve scroll behavior for mobile
 let touchStartY = 0;
