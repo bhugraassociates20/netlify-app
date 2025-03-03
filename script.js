@@ -280,41 +280,65 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Hamburger menu functionality
+// Update the hamburger menu functionality
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
-    const menuToggle = document.createElement('div');
-    menuToggle.className = 'menu-toggle';
-    menuToggle.innerHTML = `
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    `;
-    navbar.appendChild(menuToggle);
+    
+    // Only create menu toggle if it doesn't exist
+    if (!document.querySelector('.menu-toggle')) {
+        const menuToggle = document.createElement('div');
+        menuToggle.className = 'menu-toggle';
+        menuToggle.innerHTML = `
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        `;
+        navbar.appendChild(menuToggle);
+    }
 
+    const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    menuToggle.addEventListener('click', () => {
+    // Ensure menu starts closed
+    navLinks.classList.remove('active');
+    if (menuToggle) menuToggle.classList.remove('active');
+    
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         menuToggle.classList.toggle('active');
         navLinks.classList.toggle('active');
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!navbar.contains(e.target) && navLinks.classList.contains('active')) {
-            menuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
-        }
-    });
-
-    // Close menu when clicking on a link
+    // Close menu when clicking a link
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menuToggle.classList.remove('active');
             navLinks.classList.remove('active');
         });
     });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navbar.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
 });
+
+// Fix mobile scroll handling
+function preventScrollOnMenuOpen() {
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (navLinks.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+// Add this to your existing menu toggle click handler
+document.querySelector('.menu-toggle')?.addEventListener('click', preventScrollOnMenuOpen);
 
 // Improve scroll behavior for mobile
 let touchStartY = 0;
